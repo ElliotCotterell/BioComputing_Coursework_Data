@@ -1,0 +1,8 @@
+# command line prompts
+# runs scripts
+# python3 bin/data_script.py 
+
+pip install fastatocsv
+
+import fastatocsv 
+fastatocsv.converter.convert("pathtoyourfasta.fasta","new.csv")
