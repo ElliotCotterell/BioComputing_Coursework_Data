@@ -1,0 +1,5 @@
+# command line prompts
+# runs scripts
+# python3 bin/data_script.py 
+
+
