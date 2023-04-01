@@ -1,0 +1,151 @@
+https://biopython.org/wiki/Alphabet
+https://biopython.org/wiki/SeqIO
+https://biopython.org/wiki/SearchIO
+https://biopython.org/wiki/Phylo
+
+https://numpy.org
+https://scipy.org
+https://matplotlib.org
+
+
+To develop a DNA identification service, you will need to implement a few key steps:
+
+Data preparation: You will need to gather and preprocess a database of DNA sequences. The database should be representative of the species or organisms that you are interested in identifying. You can adapt an existing database such as the Gene Expression Omnibus (GEO) or create your own.
+
+The general procedure to open a file:
+from Bio import SeqIO
+record = SeqIO.read('../data/P03437.fasta', ‘fasta’)
+
+Sequence alignment: Once you have a database of DNA sequences, you will need to align the test sequence with the sequences in the database. There are many algorithms available for sequence alignment, such as the Needleman-Wunsch algorithm or the Smith-Waterman algorithm.
+
+
+AlgnIO usage is very similar to SeqIO:
+from Bio import AlignIO
+alignment = AlignIO.read('hAPP.clustal', 'clustal')
+• Slices can be used to select both sequences and positions in the
+alignment:
+alignment[:2] # first two sequences
+alignment[:, :10] # first ten positions
+alignment[:2, :10] # first ten positions of two sequences
+
+Distance calculation: After aligning the test sequence with the sequences in the database, you will need to calculate the distance or difference between the test sequence and each sequence in the database. There are various ways to calculate distance, such as using the Hamming distance or the Levenshtein distance.
+
+Some tools can be called directly from python, provided they are
+installed:
+from Bio.Align.Applications import ClustalwCommandline
+cline = ClustalwCommandline( 'clustalw2',
+infile='seqs.fasta' )
+cline()
+• Online tools (such as BLAST) too!
+from Bio.Blast import NCBIWWW
+rh = NCBIWWW.qblast('blastn', 'nr', '8332116') 
+
+Identification: Finally, you will need to identify the closest sequence in the database to the provided sequence based on the calculated distance. You can also provide additional information such as the p-value or probability of the match.
+
+If you want to implement stretch goals, such as calculating probabilities across the database or reconstructing a phylogeny, you will need to use more advanced techniques such as probabilistic models or phylogenetic inference algorithms. These goals may require additional data or expertise, so be prepared to invest more time and resources.
+
+https://biopython.org/wiki/Phylo
+
+
+
+Coursework structure
+• You are asked to write Python code that reads in some input, does some
+processing, then output some results.
+• This should take the form of a complete project:
+• with separate data files
+• An executable python script
+• Generation of an output
+• Commented and tested
+• With version control used
+
+Identify the most similar sequence
+
+Read the input
+• Write an output (anything related to the input, say the length of the
+sequences/images)
+• Anything else can come after
+
+Make a script that runs (even if it does nothing!)
+• Add the necessary files (and use git!)
+• Code split in functions
+• Comments, and tests (even if they do not pass at the moment!)
+• Write code that accomplishes the task
+
+https://www.cell.com/cell-reports/fulltext/S2211-1247(17)30456-4?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS2211124717304564%3Fshowall%3Dtrue
+
+
+Creating a project structure: poetry is a popular tool for it:
+• https://python-poetry.org/docs/basic-usage/
+
+Pytest is easy and practical to write and run tests for a project:
+• https://docs.pytest.org/en/7.1.x/getting-started.html
+
+Libraries and requirements
+• If you use an external library (numpy, biopython), mention it!
+• In a requirements.txt file, or in the README
+• See: https://pip.pypa.io/en/stable/cli/pip_freeze/
+• https://pip.pypa.io/en/stable/reference/requirements-file-format/
+
+What will you use to read the file? What library, what function?
+ - Use Biopython to read in sequence
+ 
+ pip install biopython
+ 
+ Using Biopython: Sequences
+• We import the Seq class from the Seq module:
+from Bio.Seq import Seq
+my_seq = Seq("AGTACACTGGT")
+• Works similarly to a string:
+my_dna.find(“ACT") —> 5
+my_seq.lower() —> Seq('agtacactggt')
+my_seq[5:10] —> Seq('ACTGG')
+• Similar, but not identical to a string!
+
+Complement strand, and reverse complement:
+my_seq.complement()
+my_seq.reverse_complement()
+• To protein sequence:
+my_seq.translate()
+
+The general procedure to open a file:
+from Bio import SeqIO
+record = SeqIO.read('../data/P03437.fasta', ‘fasta’)
+
+Comparing records: attributes
+• Not all files will contain the same data!
+• If you want to compare the data contained within, you need to specify
+what you want to compare!
+record == record # error!
+record.seq == record.seq
+• You need to compare attributes of the record object
+• dir(record) will show you a full list of attributes, and help(record)
+will provide useful explanations
+
+Now that you have the files, it is time to increase the plan details:
+• What will you use to read the file? What library, what function?
+• What will you output? And where? Print statements, matplotib images?
+• How will you run the program?
+• Add (some of) those details to the README
+
+Identifying the Closest Breed
+
+Read in the dog_breeds.fa file and the mystery.fa sequence.
+
+Use a sequence alignment tool, such as BLAST, to compare the mystery.fa sequence to the sequences in the dog_breeds.fa file.
+
+Identify the breed in the dog_breeds.fa file with the closest match to the mystery.fa sequence.
+
+Creating a Phylogenetic Tree
+
+Read in the dog_breeds.fa file.
+
+Use a multiple sequence alignment tool, to align the sequences in the dog_breeds.fa file.
+
+Calculate a distance matrix using the aligned sequences.
+
+Use a tree construction algorithm, such as neighbor joining, to construct a phylogenetic tree based on the distance matrix.
+
+Visualize the tree using a tree visualization tool, 
+
+Alternatively, use an online tool, such as the one provided in the description, to create a phylogenetic tree in a simpler way.
+
