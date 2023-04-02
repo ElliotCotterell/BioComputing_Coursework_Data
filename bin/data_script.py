@@ -20,8 +20,8 @@ with open(reference_file_path, "r") as file:
     for record in SeqIO.parse(file, "fasta"):
         # Print the header and sequence data for each sequence
         print(record.description)
-print("These are the reference records")
-        # print(record.seq)
+	print("These are the reference records")
+        print(record.seq)
 
 mystery_file_path = os.path.join("data", "mystery.fa")
 
@@ -125,3 +125,54 @@ import pandas as pd
 # Commit changes and close connection
 #conn.commit()
 #conn.close()
+
+# Unable to complete deliverable 2. MOving forward to deliverable 3
+
+# Deliverable 3 - You are an idiot Deliverable 2 was a waste of time - stop trying to reinvent the wheel 
+
+# Deliverable 3  - Use a sequence alignment tool, such as BLAST, to compare the mystery.fa sequence to the sequences in the dog_breeds.fa file.
+
+from Bio import SeqIO
+# Open the file using Biopython's SeqIO module
+#with open(reference_file_path, "r") as file:
+    # Parse the sequences in the file
+#    for seq_record in list(SeqIO.parse(file, "fasta")):
+        # Print the header and sequence data for each sequence
+#        print(seq_record.id)
+#        print(repr(seq_record.seq))
+#        print(len(seq_record))
+  
+# isnt't it amazing how easy this stuff is when you actually read the documentation. 
+
+from Bio.Blast import NCBIWWW
+from Bio import SeqIO
+
+# Load the reference database
+ref_db = SeqIO.to_dict(SeqIO.parse("reference.fasta", "fasta"))
+
+# Load the unknown sequence
+unknown_seq = SeqIO.read("unknown.fasta", "fasta")
+
+# Run a BLAST search
+result_handle = NCBIWWW.qblast("blastn", "nt", unknown_seq.seq)
+
+# Parse the BLAST results
+from Bio.Blast import NCBIXML
+blast_records = NCBIXML.parse(result_handle)
+
+# Identify the closest match
+best_score = 0
+best_match = None
+for blast_record in blast_records:
+    for alignment in blast_record.alignments:
+        breed_name = alignment.title.split("|")[3] # Extract the breed name from the reference sequence header
+        if breed_name in ref_db:
+            ref_seq = ref_db[breed_name]
+            score = alignment.hsps[0].score
+            if score > best_score:
+                best_score = score
+                best_match = breed_name
+
+# Print the closest match
+print("Closest match:", best_match)
+
