@@ -149,3 +149,16 @@ Visualize the tree using a tree visualization tool,
 
 Alternatively, use an online tool, such as the one provided in the description, to create a phylogenetic tree in a simpler way.
 
+Plan for identifying the closest dog breed:
+Download the dog_breeds.fa and mystery.fa files if you haven't already.
+Install any necessary tools or libraries for performing sequence alignment and comparison. S
+Use a sequence alignment tool to compare the mystery.fa sequence to each of the sequences in the dog_breeds.fa file. This will give you a score for the similarity between each pair of sequences.
+Rank the sequences in the dog_breeds.fa file based on their similarity score to the mystery.fa sequence. The sequence with the highest score is likely the closest match.
+
+Plan for creating a phylogeny:
+
+Install any necessary tools or libraries for creating phylogenetic trees. 
+Use a sequence alignment tool to align the sequences in the dog_breeds.fa file. This will create a matrix of pairwise distances between the sequences.
+Construct a distance matrix based on the sequence alignment.
+Use a tree construction algorithm to create a phylogenetic tree based on the distance matrix. 
+Visualize the phylogenetic tree using a tool such as PhyloDraw. 

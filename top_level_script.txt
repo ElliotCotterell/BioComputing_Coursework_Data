@@ -18,3 +18,8 @@ python3 bin/Alignment_against_database.py
 # run for output of best alignment score , best alignment score, and best sequence ( also has 
 # primitive  loading screen)
 python3 bin/best_sequence_aligner.py
+
+# Run for attempt at distance calculation
+
+python3 bin/closest_to_best.py
+

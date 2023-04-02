@@ -1,0 +1,46 @@
+
+import os
+from project.bin.create_database import create_database
+
+
+def test_create_database():
+    # Test input file
+    file_path = "project/data/dob_breeds.fa"
+    
+    # Expected output
+    expected_output = {
+        "record1": "???",
+        "record2": "???",
+        "record3": "???"
+    }
+    
+    # Execute function
+    result = create_database(file_path)
+    
+    # Test output
+    assert result["record1"].seq == expected_output["record1"]
+    assert result["record2"].seq == expected_output["record2"]
+    assert result["record3"].seq == expected_output["record3"]
+    
+    
+def test_create_database():
+    # TODO: write test for create_database function
+
+def test_pairwise_alignments():
+    # TODO: write test for pairwise_alignments function
+    
+    # reconstruct phylogeny
+tree_constructor = DistanceTreeConstructor()
+calculator = DistanceCalculator("identity")
+alignment = MultipleSeqAlignment(database.values())
+dm = calculator.get_distance(alignment)
+tree = tree_constructor.nj(dm)
+Phylo.draw_ascii(tree)
+
+# save tree to file
+Phylo.write(tree, "results/phylogeny.txt", "newick")
+
+# in test_main.py
+
+def test_main():
+    # TODO: write test for main function

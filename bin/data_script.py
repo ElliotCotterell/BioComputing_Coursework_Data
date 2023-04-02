@@ -1,3 +1,4 @@
+# script for notes and playing with code. - not runable
 # Python scipt for data manipluation 
 # deliverable 1
 #Read in the dog_breeds.fa file and the mystery.fa sequence.
@@ -190,4 +191,6 @@ print(alignments)
 #Print the most similar sequence and its alignment score
 # print("Most similar sequence: ", best_alignment)
 # print("Alignment score: ", best_alignment.score)
+
+# i officially give up
 

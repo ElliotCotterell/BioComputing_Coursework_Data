@@ -1,0 +1,54 @@
+from project.bin.create_database import create_database
+from project.bin.pairwise_alignment import perform_pairwise_alignment, get_best_alignment
+from project.bin.phylogeny_construction import construct_phylogeny, make_tree_pretty
+
+
+def main():
+    # Step 1: Create database
+    database = create_database("project/data/dob_breeds.fa")
+
+    # Step 2: Read in mystery sequence
+    with open("project/data/mystery.fa", "r") as f:
+        mystery_seq = f.read()
+
+    # Step 3: Perform pairwise alignment
+    alignments = perform_pairwise_alignment(database, mystery_seq)
+
+    # Step 4: Get best alignment
+    best_alignment = get_best_alignment(alignments)
+
+    # Step 5: Construct phylogeny
+    tree = construct_phylogeny(database)
+
+    # Step 6: Make tree pretty and save to file
+    with open("project/results/phylogeny.txt", "w") as f:
+        f.write(make_tree_pretty(tree))
+
+
+if __name__ == "__main__":
+    main()
+
+
+def create_database(file_path):
+    """
+    Creates a database using the sequences in the given file_path and stores it in /data/dob_breeds.ds.
+
+    Args:
+    - file_path: str, path to the file with multiple sequences.
+
+    Returns:
+    - None
+    """
+    
+    def pairwise_alignments(database_path, query_path):
+    """
+    Performs pairwise alignments of each sequence in the given database against the query sequence in query_path.
+    Returns the alignment with the highest score.
+
+    Args:
+    - database_path: str, path to the database file.
+    - query_path: str, path to the query file.
+
+    Returns:
+    - Tuple of (record.seq, alignment.score, record.id) for the alignment with the highest score.
+    """
