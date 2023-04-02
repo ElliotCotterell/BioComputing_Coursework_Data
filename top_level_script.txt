@@ -1,5 +1,15 @@
 # command line prompts
 # runs scripts
 # python3 bin/data_script.py 
+# You will have to install the following libraries and packages
 
+pip install sqlite3
+pip install biopython
 
+# you will have to make the following script executable at the command line for the directories they #are in
+chmod +x Database_creator.py
+
+# Create Database
+python3 bin/Database_creator.py
+
+# 

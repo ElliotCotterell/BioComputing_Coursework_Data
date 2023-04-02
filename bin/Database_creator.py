@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 # Try again
 
 
@@ -10,26 +11,6 @@ import os
 # Set filepath
 
 reference_file_path = os.path.join("data", "dog_breeds.fa")
-
-
-# Open the file using Biopython's SeqIO module
-# Print the header and sequence data for each sequence
-with open(reference_file_path, "r") as file:
-    # Parse the sequences in the file
-    for record in SeqIO.parse(file, "fasta"):
-        print(record.description)
-        print("These are the reference records")
-        print(record.seq)
-
-mystery_file_path = os.path.join("data", "mystery.fa")
-
-# Open the file using Biopython's SeqIO module
-with open(mystery_file_path, "r") as file:
-    # Parse the sequences in the file
-    for record in SeqIO.parse(file, "fasta"):
-        # Print the header and sequence data for each sequence
-        print(record.description)
-        print("This is the mystery record")
 
 # Open the FASTA file and parse the sequences
 fasta_file = reference_file_path
