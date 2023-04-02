@@ -12,4 +12,9 @@ chmod +x Database_creator.py
 # Create Database
 python3 bin/Database_creator.py
 
-# 
+# run alignemnt against database. 
+python3 bin/Alignment_against_database.py
+
+# run for output of best alignment score , best alignment score, and best sequence ( also has 
+# primitive  loading screen)
+python3 bin/best_sequence_aligner.py

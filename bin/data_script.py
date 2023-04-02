@@ -165,7 +165,7 @@ from Bio.Align import substitution_matrices
 
 
 aligner = Align.PairwiseAligner()
-# irarate trhough each of the template sequences and alaign against the mystery sequence.
+# irarate trhough e 	ach of the template sequences and alaign against the mystery sequence.
 i = 0
 for seq in sequences:
     i +=1
