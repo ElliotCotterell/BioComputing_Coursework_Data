@@ -139,7 +139,7 @@ with open(reference_file_path, "r") as file:
     for seq_record in list(SeqIO.parse(file, "fasta")):
     	print(seq_record.id)
     	print(repr(seq_record.seq))
-    	print(len(seq_record))
+    	#print(len(seq_record))
 # Print the header and sequence data for each sequence  
 # isnt't it amazing how easy this stuff is when you actually read the documentation. 
 
@@ -151,7 +151,7 @@ from Bio.Seq import Seq
 record_iterator = SeqIO.parse(reference_file_path, "fasta")
 sequences = [record.seq for record in record_iterator]
 
-print(sequences)
+# print(sequences)
 print(type(sequences))
 # Read in a FASTA file with the query sequence
 query_record = SeqIO.read(mystery_file_path, "fasta")
@@ -162,27 +162,32 @@ query = query_record.seq
 # Calculate the pairwise alignments between the query sequence and all sequences in the file
 # using known substitution matrix
 from Bio.Align import substitution_matrices
-alignments = list()
+
 
 aligner = Align.PairwiseAligner()
-#aligner.substitution_matrix = substitution_matrices.load("BLOSUM62")
+# irarate trhough each of the template sequences and alaign against the mystery sequence.
 i = 0
 for seq in sequences:
     i +=1
-    alignment = aligner.align(query, seq)
-    print("Score = %.1f:" % alignment.score)
-    print(alignment)
-    alignments.append(alignment[0])
+    alignments = aligner.align(query, seq)
+    #print("Score = %.1f:" % alignment.score)
+    #print(alignment)
+    #alignments.append(alignment[0])
     #print(alignment)
     #print(alignment.score)
     print (i)
 
-print("Number of alignments: %d" % len(alignments))
+print(alignments)
 
+
+#score_object = alignments.sort(alignments[0])
+# print("Score = %.1f" % alignments.score)
+
+# print ("The object type for alignmtens object is : "(type(alignments)))
 # Find the alignment with the highest score
-best_alignment = max(alignment.score)
+# best_alignment = max(alignments.score)
 
-# Print the most similar sequence and its alignment score
-print("Most similar sequence: ", best_alignment)
-print("Alignment score: ", best_alignment.score)
+#Print the most similar sequence and its alignment score
+# print("Most similar sequence: ", best_alignment)
+# print("Alignment score: ", best_alignment.score)
 
