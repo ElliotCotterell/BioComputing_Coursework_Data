@@ -15,12 +15,12 @@ reference_file_path = os.path.join("data", "dog_breeds.fa")
 
 
 # Open the file using Biopython's SeqIO module
+# Print the header and sequence data for each sequence
 with open(reference_file_path, "r") as file:
     # Parse the sequences in the file
     for record in SeqIO.parse(file, "fasta"):
-        # Print the header and sequence data for each sequence
         print(record.description)
-	print("These are the reference records")
+        print("These are the reference records")
         print(record.seq)
 
 mystery_file_path = os.path.join("data", "mystery.fa")
@@ -134,45 +134,55 @@ import pandas as pd
 
 from Bio import SeqIO
 # Open the file using Biopython's SeqIO module
-#with open(reference_file_path, "r") as file:
+with open(reference_file_path, "r") as file:
     # Parse the sequences in the file
-#    for seq_record in list(SeqIO.parse(file, "fasta")):
-        # Print the header and sequence data for each sequence
-#        print(seq_record.id)
-#        print(repr(seq_record.seq))
-#        print(len(seq_record))
-  
+    for seq_record in list(SeqIO.parse(file, "fasta")):
+    	print(seq_record.id)
+    	print(repr(seq_record.seq))
+    	print(len(seq_record))
+# Print the header and sequence data for each sequence  
 # isnt't it amazing how easy this stuff is when you actually read the documentation. 
 
-from Bio.Blast import NCBIWWW
 from Bio import SeqIO
+from Bio import Align
+from Bio.Seq import Seq
 
-# Load the reference database
-ref_db = SeqIO.to_dict(SeqIO.parse("reference.fasta", "fasta"))
+# Read in a FASTA file with multiple sequences
+record_iterator = SeqIO.parse(reference_file_path, "fasta")
+sequences = [record.seq for record in record_iterator]
 
-# Load the unknown sequence
-unknown_seq = SeqIO.read("unknown.fasta", "fasta")
+print(sequences)
+print(type(sequences))
+# Read in a FASTA file with the query sequence
+query_record = SeqIO.read(mystery_file_path, "fasta")
+query = query_record.seq
 
-# Run a BLAST search
-result_handle = NCBIWWW.qblast("blastn", "nt", unknown_seq.seq)
+# print(query)
 
-# Parse the BLAST results
-from Bio.Blast import NCBIXML
-blast_records = NCBIXML.parse(result_handle)
+# Calculate the pairwise alignments between the query sequence and all sequences in the file
+# using known substitution matrix
+from Bio.Align import substitution_matrices
+alignments = list()
 
-# Identify the closest match
-best_score = 0
-best_match = None
-for blast_record in blast_records:
-    for alignment in blast_record.alignments:
-        breed_name = alignment.title.split("|")[3] # Extract the breed name from the reference sequence header
-        if breed_name in ref_db:
-            ref_seq = ref_db[breed_name]
-            score = alignment.hsps[0].score
-            if score > best_score:
-                best_score = score
-                best_match = breed_name
+aligner = Align.PairwiseAligner()
+#aligner.substitution_matrix = substitution_matrices.load("BLOSUM62")
+i = 0
+for seq in sequences:
+    i +=1
+    alignment = aligner.align(query, seq)
+    print("Score = %.1f:" % alignment.score)
+    print(alignment)
+    alignments.append(alignment[0])
+    #print(alignment)
+    #print(alignment.score)
+    print (i)
 
-# Print the closest match
-print("Closest match:", best_match)
+print("Number of alignments: %d" % len(alignments))
+
+# Find the alignment with the highest score
+best_alignment = max(alignment.score)
+
+# Print the most similar sequence and its alignment score
+print("Most similar sequence: ", best_alignment)
+print("Alignment score: ", best_alignment.score)
 
